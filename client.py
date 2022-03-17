@@ -5,14 +5,13 @@ import os
 SEPARATOR = "<SEPARATOR>"
 BUFFER_SIZE = 4096
 HOST = "robopi.local"
+port = 5001
 
 def send_apk():
     s = socket.socket()
-    host = "robopi.local"
-    port = 5001
-    print(f"[+] Connecting to {host}:{port}")
-    s.connect((host, port))
-    print("[+] Connected to ", host)
+    print(f"[+] Connecting to {HOST}:{port}")
+    s.connect((HOST, port))
+    print("[+] Connected to ", HOST)
     filename = "TeamCode-debug.apk"
     filepath = "./TeamCode/build/intermediates/apk/debug/TeamCode-debug.apk"
     filesize = os.path.getsize(filepath)
