@@ -33,7 +33,7 @@ def listen_for_file():
 
 def send_apk_to_device():
 	if os.path.exists(APK_NAME):
-		os.popen("/bin/bash adb install " + APK_NAME)
+		os.popen("adb install " + APK_NAME)
 
 while __name__ == "__main__":
 	listen_for_file()
