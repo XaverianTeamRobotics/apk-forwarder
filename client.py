@@ -15,7 +15,7 @@ def send_apk():
     filename = "TeamCode-debug.apk"
     filepath = "./TeamCode/build/intermediates/apk/debug/TeamCode-debug.apk"
     filesize = os.path.getsize(filepath)
-    s.send(f"{filename}{SEPARATOR}{filesize}{SEPARATOR}{PASSWORD}".encode())
+    s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 
     progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
     with open(filepath, "rb") as f:
