@@ -9,32 +9,32 @@ SEPARATOR = "<SEPARATOR>"
 APK_NAME = "TeamCode-debug.apk"
 
 def listen_for_file():
-    s = socket.socket()
-    s.bind((SERVER_HOST, SERVER_PORT))
-    s.listen(10)
-    print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
-    print("Waiting for the client to connect... ")
-    client_socket, address = s.accept()
-    print(f"[+] {address} is connected.")
-    received = client_socket.recv(BUFFER_SIZE).decode()
-    filename, filesize= received.split(SEPARATOR)
+	s = socket.socket()
+	s.bind((SERVER_HOST, SERVER_PORT))
+	s.listen(10)
+	print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
+	print("Waiting for the client to connect... ")
+	client_socket, address = s.accept()
+	print(f"[+] {address} is connected.")
+	received = client_socket.recv(BUFFER_SIZE).decode()
+	filename, filesize= received.split(SEPARATOR)
 	filename = os.path.basename(filename)
 	filesize = int(filesize)
 	progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
 	with open(filename, "wb") as f:
-	    while True:
+		while True:
 		bytes_read = client_socket.recv(BUFFER_SIZE)
 		if not bytes_read:
-		    break
+			break
 		f.write(bytes_read)
 		progress.update(len(bytes_read))
-    client_socket.close()
-    s.close()
+	client_socket.close()
+	s.close()
 
 def send_apk_to_device():
-    if os.path.exists(APK_NAME):
-        os.popen("adb install " + APK_NAME)
+	if os.path.exists(APK_NAME):
+		os.popen("adb install " + APK_NAME)
 
 while __name__ == "__main__":
-    listen_for_file()
-    send_apk_to_device()
+	listen_for_file()
+	send_apk_to_device()
