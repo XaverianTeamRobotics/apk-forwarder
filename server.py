@@ -8,9 +8,10 @@ BUFFER_SIZE = 4096
 SEPARATOR = "<SEPARATOR>"
 APK_NAME = "TeamCode-debug.apk"
 
+s = socket.socket()
+s.bind((SERVER_HOST, SERVER_PORT))
+
 def listen_for_file():
-	s = socket.socket()
-	s.bind((SERVER_HOST, SERVER_PORT))
 	s.listen(10)
 	print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
 	print("Waiting for the client to connect... ")
@@ -29,7 +30,6 @@ def listen_for_file():
 			f.write(bytes_read)
 			progress.update(len(bytes_read))
 	client_socket.close()
-	s.close()
 
 def send_apk_to_device():
 	if os.path.exists(APK_NAME):
