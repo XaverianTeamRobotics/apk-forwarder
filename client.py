@@ -6,7 +6,6 @@ SEPARATOR = "<SEPARATOR>"
 BUFFER_SIZE = 4096
 HOST = "robopi.local"
 PORT = 5001
-PASSWORD = "password"
 
 def send_apk():
     s = socket.socket()
