@@ -6,7 +6,6 @@ SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 5001
 BUFFER_SIZE = 4096
 SEPARATOR = "<SEPARATOR>"
-PASSWORD = "password"
 APK_NAME = "TeamCode-debug.apk"
 
 def listen_for_file():
@@ -18,20 +17,17 @@ def listen_for_file():
     client_socket, address = s.accept()
     print(f"[+] {address} is connected.")
     received = client_socket.recv(BUFFER_SIZE).decode()
-    filename, filesize, passwd = received.split(SEPARATOR)
-    if passwd == PASSWORD:
-        filename = os.path.basename(filename)
-        filesize = int(filesize)
-        progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-        with open(filename, "wb") as f:
-            while True:
-                bytes_read = client_socket.recv(BUFFER_SIZE)
-                if not bytes_read:
-                    break
-                f.write(bytes_read)
-                progress.update(len(bytes_read))
-    else:
-        print("[-] Invalid password given")
+    filename, filesize= received.split(SEPARATOR)
+	filename = os.path.basename(filename)
+	filesize = int(filesize)
+	progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+	with open(filename, "wb") as f:
+	    while True:
+		bytes_read = client_socket.recv(BUFFER_SIZE)
+		if not bytes_read:
+		    break
+		f.write(bytes_read)
+		progress.update(len(bytes_read))
     client_socket.close()
     s.close()
 
